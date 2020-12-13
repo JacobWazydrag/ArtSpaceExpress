@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router()
 
-//all routes related to users
+const {sayHi} = require('../controllers/user')
 
-router.get('/', (req, res) => {
-    res.send('hello from node user.js');
-})
+router.get('/', sayHi);
 
 module.exports = router;
