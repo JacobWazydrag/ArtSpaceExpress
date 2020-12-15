@@ -23,7 +23,6 @@ exports.signup = (req, res) => {
 exports.signin = (req, res) => {
     //find the user based on email
     const {email, password} = req.body
-    console.log('req: ' + req)
     User.findOne({email}, (err, user) => {
         if (err || !user) {
             return res.status(400).json({
@@ -45,4 +44,9 @@ exports.signin = (req, res) => {
         const {_id, name, email, role} = user;
         return res.json({token, user: {_id, email, name, role} });
     });
+};
+
+exports.signout = (req, res) => {
+    res.clearCookie('t');
+    res.json({ message: 'Signout success' });
 };
