@@ -59,17 +59,38 @@ exports.requireSignin = expressJwt({
 
 exports.isAuth = (req, res, next) => {
     console.log(req.profile, req.auth, req.profile._id, req.auth._id);
-    let user = req.profile && req.auth && req.profile._id === req.auth._id;
+    let user = req.profile && req.auth && req.profile._id == req.auth._id;
     if (!user) {
         return res.status(403).json({
-            error: 'Access Denied'
+            error: 'Access Denied!'
         });
     }
     next();
 };
 
 exports.isAdmin = (req, res, next) => {
-    if (req.profile.role === 0) {
-        return res.status(403);
+    if (req.profile.role < 3) {
+        return res.status(403).json({
+            error: 'Admin resource! Access denied!'
+        });
     }
+    next();
+};
+
+exports.isGM = (req, res, next) => {
+    if (req.profile.role < 2) {
+        return res.status(403).json({
+            error: 'GM resource! Access denied!'
+        });
+    }
+    next();
+};
+
+exports.isManager = (req, res, next) => {
+    if (req.profile.role < 1) {
+        return res.status(403).json({
+            error: 'Manager resource! Access denied!'
+        });
+    }
+    next();
 };
