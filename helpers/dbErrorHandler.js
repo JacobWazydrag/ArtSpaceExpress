@@ -1,33 +1,27 @@
-"use strict";
- 
+'use strict';
+
 /**
  * Get unique error field name
  */
-const uniqueMessage = error => {
+const uniqueMessage = (error) => {
     let output;
     try {
-        let fieldName = error.message.substring(
-            error.message.lastIndexOf(".$") + 2,
-            error.message.lastIndexOf("_1")
-        );
-        output =
-            fieldName.charAt(0).toUpperCase() +
-            fieldName.slice(1) +
-            " already exists";
+        let fieldName = error.message.substring(error.message.lastIndexOf('.$') + 2, error.message.lastIndexOf('_1'));
+        output = fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' already exists';
     } catch (ex) {
-        output = "Unique field already exists";
+        output = 'Unique field already exists';
     }
- 
+
     return output;
 };
- 
+
 /**
  * Get the erroror message from error object
  * Using this methid to send out any errors
  */
-exports.errorHandler = error => {
-    let message = "";
- 
+exports.errorHandler = (error) => {
+    let message = '';
+
     if (error.code) {
         switch (error.code) {
             case 11000:
@@ -35,14 +29,13 @@ exports.errorHandler = error => {
                 message = uniqueMessage(error); //Grabbing the readable parts of the error and format the error message
                 break;
             default:
-                message = "Something went wrong";
+                message = 'Something went wrong';
         }
     } else {
         for (let errorName in error.errorors) {
-            if (error.errorors[errorName].message)
-                message = error.errorors[errorName].message;
+            if (error.errorors[errorName].message) message = error.errorors[errorName].message;
         }
     }
- 
+
     return message;
 };

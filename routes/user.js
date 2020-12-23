@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const { requireSignin, isAuth, isAdmin, isGM } = require('../controllers/auth');
+const { userById } = require('../controllers/user');
 
-const { signup, signin, signout } = require('../controllers/user')
-const { userSignupValidator } = require('../validator/index');
+router.get('/secret/:userId', requireSignin, isAuth, isGM, (req, res) => {
+    res.json({
+        user: req.profile
+    });
+});
 
-//when user hits the route, will hit validator first then signup controller
-router.post('/signup', userSignupValidator, signup);
-router.post('/signin', signin);
-router.get('/signout', signout);
+router.param('userId', userById);
 
 module.exports = router;
