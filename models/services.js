@@ -26,6 +26,17 @@ const servicesSchema = new mongoose.Schema(
             maxLength: 32,
             required: false
         },
+        availablitiy: {
+            type: String,
+            trim: true,
+            required: false
+        },
+        discipline: {
+            type: String,
+            trim: true,
+            maxLength: 32,
+            required: false
+        },
         img: {
             data: Buffer,
             contentType: String,
@@ -61,6 +72,10 @@ const servicesSchema = new mongoose.Schema(
         quantity: {
             type: Number,
             required: false
+        },
+        sold: {
+            type: Number,
+            default: 0
         }
     },
     { timestamps: true }
