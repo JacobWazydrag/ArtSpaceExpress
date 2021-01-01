@@ -3,6 +3,7 @@ const formidable = require('formidable');
 const _ = require('lodash');
 const fs = require('fs');
 const { errorHandler } = require('../helpers/dbErrorHandler');
+const landingCards = require('../models/landingCards');
 
 exports.create = (req, res) => {
     let form = new formidable.IncomingForm();
@@ -14,7 +15,7 @@ exports.create = (req, res) => {
             });
         }
         //check for all fields
-        const { title, subTitle} = fields;
+        const { title, subTitle } = fields;
         const { img } = files;
 
         if (!title || !subTitle || !img) {
@@ -43,4 +44,17 @@ exports.create = (req, res) => {
             res.json(result);
         });
     });
+};
+
+exports.list = (req, res) => {
+    LandingCard.find()
+        .select('-img')
+        .exec((err, services) => {
+            if (err) {
+                return res.status(400).json({
+                    error: 'Services not found!'
+                });
+            }
+            res.json(services);
+        });
 };
