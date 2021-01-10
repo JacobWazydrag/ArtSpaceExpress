@@ -112,3 +112,27 @@ exports.update = (req, res) => {
         });
     });
 };
+
+exports.remove = (req, res) => {
+    let landingCard = req.landingCard;
+    landingCard.remove((err, deletedLandingCard) => {
+        if (err) {
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        res.json({
+            deletedLandingCard,
+            message: 'Landing Card has been deleted!'
+        });
+    });
+};
+
+exports.img = (req, res, next) => {
+    console.log(req)
+    if (req.landingCard.img.data) {
+        res.set('Content-Type', req.landingCard.img.contentType);
+        return res.send(req.landingCard.img.data);
+    }
+    next();
+};
