@@ -3,8 +3,6 @@ const formidable = require('formidable');
 const _ = require('lodash');
 const fs = require('fs');
 const { errorHandler } = require('../helpers/dbErrorHandler');
-const { EPROTONOSUPPORT } = require('constants');
-const services = require('../models/services');
 
 exports.create = (req, res) => {
     let form = new formidable.IncomingForm();
