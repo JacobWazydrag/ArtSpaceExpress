@@ -9,9 +9,11 @@ require('dotenv').config();
 //importing routes here
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const artistRoutes = require('./routes/artist');
 const categoryRoutes = require('./routes/category');
 const servicesRoutes = require('./routes/services');
 const landingCardRoutes = require('./routes/landingCards');
+const storeRoutes = require('./routes/stores');
 
 //app
 const app = express();
@@ -38,6 +40,8 @@ app.use('/api', userRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', servicesRoutes);
 app.use('/api', landingCardRoutes);
+app.use('/api', storeRoutes);
+app.use('/api', artistRoutes);
 
 //grabbing port from env file or 8000 by default
 const port = process.env.PORT || 8000;
